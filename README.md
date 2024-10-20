@@ -1,4 +1,4 @@
-This website uses the framework django. The languages used were python, javascript, and html+css, this website has not been made public yet.
+This website uses the framework django. The website was developed with python, javascript, and html+css. This website has not been made public yet.
 
 I designed this website as a comprehensive social networking platform that allows users to create profiles, connect with friends, and share content seamlessly.
 
