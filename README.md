@@ -1,3 +1,5 @@
+This website uses the framework django. The languages used were python, javascript, and html+css, this website has not been made public yet.
+
 I designed this website as a comprehensive social networking platform that allows users to create profiles, connect with friends, and share content seamlessly.
 
 After signing up and logging in, users can personalize their profiles by adding details like email addresses and social media links, enhancing their online presence.
