@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learning Log</title>
+
+  {% load django_bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  {% load static %}
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
+    <div class="container-fluid"> 
+      <a class="navbar-brand" style="color: #1276ea;" href="{% url 'learning_logs:index' %}">Connect</a>
+
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarCollapse" aria-controls="navbarCollapse"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'learning_logs:topics' %}">Topics</a>
+          </li>
+        </ul> <!-- End of links on left side of navbar -->
+
+        <!-- Search Bar -->
+        <form action="{% url 'learning_logs:profile_search' %}" method="get" class="d-flex mb-3">
+          <input type="text" name="q" placeholder="Search for profiles..." class="form-control me-2" aria-label="Search">
+          <button type="submit" class="btn btn-outline-primary">Search</button>
+        </form>
+
+        <!-- Account-related links -->
+        <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+          {% if user.is_authenticated %}
+            <li class="nav-item d-inline-block"  style="margin-right: 7px; margin-top: 13px;">
+              <a href="{% url 'learning_logs:edit_user_profile' user.id %}" aria-label="Settings">
+                <img src="{% static 'learning_logs/images/setting.png' %}" class="rounded-circle" style="width: 30px; height: 30px; object-fit: cover;">
+              </a>
+            </li>
+            <li class="nav-item">
+              <div class="navbar-text me-2 mt-2"> <!-- Bootstrap margin class mt-2 for vertical spacing -->
+                Hello, {{request.user.profile.First_Name }}.
+              </div>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'accounts:register' %}">Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'accounts:login' %}">Log in</a>
+            </li>
+          {% endif %}
+        </ul> <!-- End of account-related links -->
+
+        {% if user.is_authenticated %}
+          <form action="{% url 'accounts:logout' %}" method="post" class="mt-2"> <!-- Bootstrap margin class mt-2 for spacing -->
+            {% csrf_token %}
+            <button name="submit" class="btn btn-outline-secondary btn-sm">
+              Log out
+            </button>
+          </form>
+        {% endif %}
+      </div> <!-- Closes collapsible parts of navbar -->
+    </div> <!-- Closes navbar's container -->
+  </nav> <!-- End of navbar -->
+
+  <main class="container">
+    <div class="pb-2 mb-2 border-bottom">
+      {% block page_header %}{% endblock page_header %}
+    </div>
+
+    <div>
+      {% block content %}{% endblock content %}
+    </div>
+  </main>
+
+</body>
+</html>

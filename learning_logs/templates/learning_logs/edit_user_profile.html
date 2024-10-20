@@ -1,0 +1,11 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+  <h1>Edit Profile for {{ user.username }}</h1>
+  <form method="post" enctype="multipart/form-data">  <!-- Add enctype for file uploads -->
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Changes</button>
+  </form>
+  <a href="{% url 'learning_logs:user_profile' user.id %}">Cancel</a>
+{% endblock %}

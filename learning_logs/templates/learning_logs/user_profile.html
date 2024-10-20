@@ -1,0 +1,123 @@
+{% extends 'learning_logs/base.html' %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load static %}
+
+{% block content %}
+
+  
+<div class="container mt-5 px-0">  <!-- Removed horizontal padding -->
+  <div class="d-flex justify-content-start" style="margin-left: -130px; margin-top: -45px;">  <!-- Ensure no left margin -->
+    
+    <!-- Border Wrapper -->
+    <div id= "border-wrapper" class="border rounded" style="border: 2px solid #4A90E2; padding: 20px; height: 85vh;" >
+      <div class="card" style="width: 24rem; border: none;">
+        <!-- Profile Picture -->
+        <div class="d-flex justify-content-center mt-4">
+          {% if user.profile.profile_pic %}
+            <img src="{{ user.profile.profile_pic.url }}" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
+          {% else %}
+            <img src="{% static 'learning_logs//images//profile_pic.png' %}" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
+          {% endif %}
+        </div>
+        
+        <!-- Profile Info -->
+        <div class="card-body text-center">
+          <!-- Profile Name -->
+          <h5 id="profile-name" class="card-title" style="color: #4A90E2; font-size: 1.5rem; display: inline-block;">
+            {{ user.profile.First_Name }} 
+            {% if user.profile.Last_Name %} {{ user.profile.Last_Name }} {% endif %}
+          
+            <h5>
+              {% if user.is_authenticated %}
+                  {% if request.user in profile.followers.all %}
+                      <!-- If the user is already following, show the 'Unfriend' button -->
+                      <form action="{% url 'learning_logs:unfollow' user.username %}" method="post">
+                          {% csrf_token %}
+                          <button id="friend-button" type="submit" class="btn btn-custom">
+                              Unfriend
+                          </button>
+                      </form>
+                  {% else %}
+                      <!-- If the user is not following, show the 'Friend' button -->
+                      <form action="{% url 'learning_logs:follow' user.username %}" method="post">
+                          {% csrf_token %}
+                          <button id="friend-button" type="submit" class="btn btn-custom" >
+                              Friend
+                          </button>
+                      </form>
+                  {% endif %}
+              {% endif %}
+          </h5>
+        </style>
+          <style>
+            .btn-custom {
+               /* Ensures the buttons are positioned in the same spot */
+          
+              position: absolute;
+              width: 90px;                      /* Fixed width */
+              height: 40px; 
+              background-color: #3d9bf9; /* Replace with your desired blue color */
+              color: white; /* Text color */
+              margin-left: -10px; 
+              
+            }
+          
+            .btn-custom:hover {
+              background-color: #3b4147; /* Darker shade for hover effect */
+            }
+
+            
+          </style>
+        
+          <!-- Bio Section -->
+          <p class="card-text text-muted" style="font-size: 14px; margin-top: 10px;">
+            {{ user.profile.bio }}
+          </p>
+        </div>
+        
+        <!-- Stats Section (Followers, Following, Posts) -->
+        <!-- Stats Section (Posts, Friends) -->
+        <div class="d-flex justify-content-around py-3">
+          <div class="text-center">
+            <h6 class="mb-0">Posts</h6>
+            <span>24</span> <!-- Replace this with actual count if available -->
+          </div>
+          <div class="text-center">
+            <h6 class="mb-0">
+             <span> <a class="nav-link" href="">Friends</a></span>
+            </h6>
+            <span>{{ user.profile.followers.count }}</span> <!-- Replace with actual count -->
+          </div>
+        </div>
+
+        <!-- Additional Information (Email, Links) -->
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item text-center">
+            <i class="bi bi-envelope-fill"></i> Email: {{ user.profile.email }}
+          </li>
+        </ul>
+
+<!-- Links to social media -->
+<div class="card-body text-center">
+  {% if user.profile.vsco_url %}
+    <a href="{{ user.profile.vsco_url }}" class="card-link" target="_blank">VSCO</a>
+  {% endif %}
+  {% if user.profile.insta_url %}
+    <a href="{{ user.profile.insta_url }}" class="card-link" target="_blank">Instagram</a>
+  {% endif %}
+  {% if user.profile.snapchat_url %}
+    <a href="{{ user.profile.snapchat_url }}" class="card-link" target="_blank">Snapchat</a>
+  {% endif %}
+</div>
+
+      </div>
+    </div> <!-- End of Border Wrapper -->
+    
+  </div>
+</div>
+
+
+<script src="{% static 'learning_logs/java.js' %}"></script>
+{% endblock content %}

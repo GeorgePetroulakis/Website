@@ -1,0 +1,20 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+  <form action="{% url 'learning_logs:search_results' %}" method="get" class="d-flex mb-3">
+    <input type="text" name="q" placeholder="Search..." class="form-control me-2" aria-label="Search">
+    <button type="submit" class="btn btn-outline-primary">Search</button>
+  </form>
+
+  <h2>Search Results for "{{ query }}"</h2>
+
+  {% if results %}
+    <ul>
+      {% for result in results %}
+        <li><a href="{% url 'learning_logs:topic' result.id %}">{{ result.name }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No results found.</p>
+  {% endif %}
+{% endblock %}

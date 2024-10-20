@@ -1,0 +1,15 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block page_header %}
+  <h1>Confirm Topic Deletion</h1>
+{% endblock page_header %}
+
+{% block content %}
+  <p>Are you sure you want to remove the topic "{{ topic.text }}"?</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, remove</button>
+    <a href="{% url 'learning_logs:select_topic_to_remove' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+{% endblock content %}

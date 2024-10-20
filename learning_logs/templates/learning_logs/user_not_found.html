@@ -1,0 +1,11 @@
+<!-- In learning_logs/user_profile_not_found.html -->
+{% extends 'learning_logs/base.html' %}
+
+{% block page_header %}
+  <h1>User Not Found</h1>
+{% endblock page_header %}
+
+{% block content %}
+  <p>Sorry, the user with ID {{ user_id }} could not be found.</p>
+  <a href="{% url 'learning_logs:topics' %}">Go back to topics</a> <!-- Or link to the appropriate page -->
+{% endblock content %}

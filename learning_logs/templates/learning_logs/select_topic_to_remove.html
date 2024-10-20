@@ -1,0 +1,20 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block page_header %}
+  <h1>Select Topic to Remove</h1>
+{% endblock page_header %}
+
+{% block content %}
+  <ul class="list-group border-bottom pb-2 mb-4">
+    {% for topic in topics %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ topic.text }}
+        <a href="{% url 'learning_logs:remove_topic' topic.id %}" class="btn btn-danger btn-sm">Remove</a>
+      </li>
+    {% empty %}
+      <li class="list-group-item">No topics have been added yet.</li>
+    {% endfor %}
+  </ul>
+
+  <a href="{% url 'learning_logs:topics' %}" class="btn btn-primary">Back to Topics</a>
+{% endblock content %}
